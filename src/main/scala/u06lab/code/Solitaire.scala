@@ -33,7 +33,7 @@ object Solitaire extends App:
           if findPossibleMoves(pos, positions.head) && !positions.contains(pos)
         yield
           Seq(pos).appendedAll(positions)
-  
+
   val allTheSolutions = placeMarks(width, height, width * height)
   println(allTheSolutions)
 
