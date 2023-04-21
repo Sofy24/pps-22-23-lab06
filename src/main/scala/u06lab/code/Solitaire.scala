@@ -21,20 +21,20 @@ object Solitaire extends App:
     (cell._1 == newPosition._1 && (cell._2 - newPosition._2).abs.equals(2)) ||
       (cell._2 == newPosition._2 && (cell._1 - newPosition._1).abs.equals(2)) ||
       ((cell._1 - newPosition._1).abs.equals(1) && (cell._2 - newPosition._2).abs.equals(1))
-
+  
   def placeMarks(w: Int, h: Int): Iterable[Seq[(Int,Int)]] =
-    def _placeNumbers(w: Int, h: Int, n: Int)(using factory: IterableFactory): Iterable[Seq[(Int,Int)]] = n match
+    def _placeNumbers(n: Int)(using factory: IterableFactory): Iterable[Seq[(Int,Int)]] = n match
       case 1 => factory(Seq((w / 2, h / 2)))
       case _ =>
         for
-          positions <- _placeNumbers(w, h, n - 1)
+          positions <- _placeNumbers(n - 1)
           x <- 0 until w
           y <- 0 until h
           pos = (x, y)
           if findPossibleMoves(pos, positions.head) && !positions.contains(pos)
         yield
           Seq(pos).appendedAll(positions)
-    _placeNumbers(w, h, w * h)
+    _placeNumbers(w * h)
 
   val allTheSolutions = placeMarks(width, height)
   println(allTheSolutions)
