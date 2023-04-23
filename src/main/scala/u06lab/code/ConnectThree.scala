@@ -39,7 +39,13 @@ object ConnectThree extends App:
       else
         Option.apply(currentY.last + 1)
 
-  def placeAnyDisk(board: Board, player: Player): Seq[Board] = ???
+  def placeAnyDisk(board: Board, player: Player): Seq[Board] =
+    for
+      x <- 0 to bound
+      y = firstAvailableRow(board, x)
+      if y != Option.empty
+    yield
+      Seq(Disk(x, y.get , player)).appendedAll(board)
 
   def computeAnyGame(player: Player, moves: Int): LazyList[Game] = ???
 
