@@ -27,9 +27,17 @@ object ConnectThree extends App:
 
   import Player.*
 
-  def find(board: Board, x: Int, y: Int): Option[Player] = ???
+  def find(board: Board, x: Int, y: Int): Option[Player] = board.findLast(d => d == Disk(x, y, d.player)).map(d => d.player)
 
-  def firstAvailableRow(board: Board, x: Int): Option[Int] = ???
+  def firstAvailableRow(board: Board, x: Int): Option[Int] =
+    val currentY = board.filter(d => d.x == x).map(d => d.y)
+    if currentY.isEmpty then
+      Option.apply(0)
+    else
+      if currentY.last == bound then
+        Option.empty
+      else
+        Option.apply(currentY.last + 1)
 
   def placeAnyDisk(board: Board, player: Player): Seq[Board] = ???
 
@@ -51,6 +59,7 @@ object ConnectThree extends App:
   println(find(List(Disk(0, 0, X)), 0, 0)) // Some(X)
   println(find(List(Disk(0, 0, X), Disk(0, 1, O), Disk(0, 2, X)), 0, 1)) // Some(O)
   println(find(List(Disk(0, 0, X), Disk(0, 1, O), Disk(0, 2, X)), 1, 1)) // None
+
 
   // Exercise 2: implement firstAvailableRow such that..
   println("EX 2: ")
